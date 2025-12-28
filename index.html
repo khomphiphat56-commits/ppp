@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Anniversary 💜</title>
+
+<style>
+:root{
+  --p1:#f4efff;
+  --p2:#e8ddff;
+  --p3:#d6c6ff;
+  --accent:#8f6bff;
+  --dark:#5b4b8a;
+  --soft:#7c6fa8;
+}
+
+*{box-sizing:border-box;font-family:"Segoe UI",system-ui,sans-serif}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(135deg,var(--p1),var(--p2),var(--p3));
+  overflow:hidden;
+}
+
+/* ---------- หน้าเข้า ---------- */
+#intro{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#c9a7ff,#9b7dff);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+  z-index:50;
+  transition:.8s ease;
+}
+
+#intro h1{font-size:26px;margin-bottom:8px}
+#intro p{font-size:15px;opacity:.9}
+
+#intro button{
+  margin-top:26px;
+  padding:14px 36px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  color:#7a4bff;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
+
+/* ---------- เอฟเฟกลอย ---------- */
+.bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+
+.float-heart,
+.float-img{
+  position:absolute;
+  bottom:-80px;
+  opacity:.6;
+  animation:rise linear forwards;
+}
+
+.float-img{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 6px 16px rgba(120,90,180,.35);
+}
+
+@keyframes rise{
+  from{
+    transform:translateY(0) translateX(0);
+    opacity:0;
+  }
+  10%{opacity:.6}
+  to{
+    transform:translateY(-120vh) translateX(40px);
+    opacity:0;
+  }
+}
+
+/* ---------- หน้าหลัก ---------- */
+#main{
+  position:relative;
+  z-index:10;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:.8s ease;
+}
+
+#main.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ---------- การ์ด ---------- */
+.card{
+  width:100%;
+  max-width:460px;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(14px);
+  border-radius:30px;
+  padding:38px 28px;
+  text-align:center;
+  box-shadow:0 30px 60px rgba(140,110,200,.25);
+}
+
+.photo{
+  width:170px;
+  height:170px;
+  margin:0 auto;
+  border-radius:50%;
+  overflow:hidden;
+  border:6px solid rgba(255,255,255,.8);
+  box-shadow:0 15px 35px rgba(140,110,200,.35);
+}
+
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+h2{
+  margin:22px 0 6px;
+  font-size:26px;
+  color:var(--dark);
+}
+
+.subtitle{
+  font-size:14px;
+  color:var(--soft);
+}
+
+.divider{
+  margin:22px auto;
+  width:80px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  position:relative;
+}
+
+.divider::after{
+  content:"💜";
+  position:absolute;
+  top:-12px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.message{
+  font-size:15px;
+  line-height:1.8;
+  color:#6a5f8f;
+}
+</style>
+</head>
+
+<body>
+
+<!-- หน้าเข้า -->
+<div id="intro">
+  <h1>มีบางอย่างอยากให้ดู 💜</h1>
+  <p>แตะเพื่อเข้าไปข้างใน</p>
+  <button onclick="enter()">✨ แตะเพื่อเข้า</button>
+</div>
+
+<!-- เอฟเฟกลอย -->
+<div class="bg" id="bg"></div>
+
+<!-- หน้าหลัก -->
+<div id="main">
+  <div class="card">
+
+    <div class="photo">
+      <img src="main.jpg">
+    </div>
+
+    <h2>Happy Anniversary 💜</h2>
+    <div class="subtitle">อีกหนึ่งปีที่มีความหมาย</div>
+
+    <div class="divider"></div>
+
+    <div class="message">
+      (แก้ข้อความตรงนี้ได้เองทั้งหมด)<br><br>
+      เขียนความรู้สึกของคุณลงไป  
+      ให้เขารู้ว่าทุกช่วงเวลามีความหมายแค่ไหน
+    </div>
+
+  </div>
+</div>
+
+<script>
+const intro = document.getElementById("intro");
+const main = document.getElementById("main");
+const bg = document.getElementById("bg");
+
+const hearts = ["💜","💖","💗","🤍","✨","🌸"];
+const imgs = ["pic1.jpg","pic2.jpg"];
+
+function enter(){
+  intro.style.opacity="0";
+  setTimeout(()=>{
+    intro.style.display="none";
+    main.classList.add("show");
+  },600);
+}
+
+/* สร้างของลอย */
+function spawn(){
+  const isImg = Math.random() > 0.45;
+
+  if(isImg){
+    const img=document.createElement("img");
+    img.src=imgs[Math.floor(Math.random()*imgs.length)];
+    img.className="float-img";
+    img.style.left=Math.random()*100+"vw";
+    img.style.animationDuration=(8+Math.random()*6)+"s";
+    bg.appendChild(img);
+    setTimeout(()=>img.remove(),16000);
+  }else{
+    const h=document.createElement("div");
+    h.className="float-heart";
+    h.textContent=hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(14+Math.random()*18)+"px";
+    h.style.animationDuration=(7+Math.random()*6)+"s";
+    bg.appendChild(h);
+    setTimeout(()=>h.remove(),16000);
+  }
+}
+
+setInterval(spawn,450);
+</script>
+
+</body>
+</html>
